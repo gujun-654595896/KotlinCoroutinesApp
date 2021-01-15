@@ -1,5 +1,6 @@
 package com.gujun.kotlincoroutinesapplication.networkOld
 
+import com.gujun.kotlincoroutinesapplication.networkNew.interceptor.HeaderInterceptor
 import com.gujun.kotlincoroutinesapplication.networkOld.interceptor.LoginInterceptor
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -16,6 +17,7 @@ class Requester {
     companion object {
         private fun <T> getService(baseUrl: String, service: Class<T>): T {
             var client = OkHttpClient.Builder()
+                .addInterceptor(HeaderInterceptor())//添加拦截器
                 .addInterceptor(LoginInterceptor())//添加拦截器
                 .build()
 

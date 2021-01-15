@@ -1,9 +1,11 @@
 package com.gujun.kotlincoroutinesapplication.networkNew
 
+import com.gujun.kotlincoroutinesapplication.networkNew.interceptor.HeaderInterceptor
 import com.gujun.kotlincoroutinesapplication.networkNew.interceptor.LoginInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 /**
  *    author : gujun
@@ -15,6 +17,9 @@ class Requester {
     companion object {
         private fun <T> getService(baseUrl: String, service: Class<T>): T {
             var client = OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.SECONDS)//设置连接超时
+                .readTimeout(5, TimeUnit.SECONDS)//设置读取超时
+                .addInterceptor(HeaderInterceptor())//添加拦截器
                 .addInterceptor(LoginInterceptor())//添加拦截器
                 .build()
 
